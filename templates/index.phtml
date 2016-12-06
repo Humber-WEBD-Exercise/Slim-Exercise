@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>Slim 3</title>
+    <link href='//fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <style>
+      *{
+        box-sizing: border-box;
+        color: #333;
+      }
+      body {
+          margin: 50px 0 0 0;
+          padding: 0;
+          width: 100%;
+          font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+          text-align: center;
+      }
+      h1, .welcome-msg span{
+        color: #719e40;
+      }
+      h1 {
+          letter-spacing: -3px;
+          font-family: 'Lato', sans-serif;
+          font-size: 100px;
+          font-weight: 200;
+          margin-bottom: 0;
+      }
+      .subtitle{
+        color: #aaa;
+        font-size: 18px;
+        margin: 0;
+      }
+      .contact-form{
+        margin: 100px auto;
+        width: 30%;
+      }
+      .contact-form input{
+        width: 100%;
+        font-size: 18px;
+      }
+      .contact-form input[type="text"]{
+        height: 30px;
+        padding: 20px 10px;
+        margin-top: 20px;
+      }
+      .submit-btn{
+        background: #719e40;
+        color: white;
+        border: none;
+        height: 50px;
+        margin-top: 40px;
+        outline: none;
+      }
+      .welcome-msg{
+        font-size: 30px;
+        margin-top: 100px;
+      }
+      .highlight{
+        border-color: #f17676;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Slim</h1>
+    <p class="subtitle">a microframework for PHP</p>
+    <?php if($send == false): ?>
+      <form action="/send" method="post" class="contact-form">
+        <input type="text" name="user[firstName]" value="" placeholder="First Name" class="fname-input">
+        <br>
+        <input type="text" name="user[lastName]" value="" placeholder="Last Name" class="lname-input">
+        <br>
+        <input type="submit" name="submitBtn" value="Submit" class="submit-btn">
+      </form>
+    <?php else: ?>
+      <p class="welcome-msg">
+        Welcome, <span><?php echo $obj["firstName"]; ?> <?php echo $obj["lastName"]; ?>!</span>
+      </p>
+    <?php endif; ?>
+
+    <script type="text/javascript">
+      $('.submit-btn').click(function(e){
+        if($('.fname-input').val() && $('.lname-input').val()){
+          $('.fname-input').removeClass('highlight');
+          $('.lname-input').removeClass('highlight');
+        }else{
+          e.preventDefault();
+          if($('.fname-input').val() == ''){
+            $('.fname-input').addClass('highlight');
+          }else{
+            $('.fname-input').removeClass('highlight');
+          }
+          if($('.lname-input').val() == ''){
+            $('.lname-input').addClass('highlight');
+          }else{
+            ('.lname-input').removeClass('highlight');
+          }
+        }
+      })
+    </script>
+  </body>
+</html>
