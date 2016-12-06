@@ -11,7 +11,7 @@ $app->get('/', function ($request, $response, $args) {
     return $this->renderer->render($response, 'index.phtml', $args);
 });
 
-$app->post('/send', function ($request, $response, $args) {
+$app->post('/welcome', function ($request, $response, $args) {
     // Sample log message
     $this->logger->info("Slim-Skeleton '/' route");
 
