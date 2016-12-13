@@ -4,28 +4,36 @@
     <meta charset="utf-8"/>
     <title>Slim 3</title>
     <link href='//fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="css/ion.rangeSlider.css">
+    <link rel="stylesheet" href="css/ion.rangeSlider.skinFlat.css">
     <style>
       *{
         box-sizing: border-box;
         color: #333;
       }
-      body {
-          margin: 50px 0 0 0;
-          padding: 0;
-          width: 100%;
-          font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-          text-align: center;
+      li{
+        list-style: none;
       }
-      h1, .welcome-msg span{
-        color: #719e40;
+      body {
+        margin: 50px 0 0 0;
+        padding: 0;
+        width: 100%;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        text-align: center;
+      }
+      button, .submit-btn{
+        background: none;
+        border: none;
+        outline: none;
+        cursor: pointer;
       }
       h1 {
-          letter-spacing: -3px;
-          font-family: 'Lato', sans-serif;
-          font-size: 100px;
-          font-weight: 200;
-          margin-bottom: 0;
+        letter-spacing: -3px;
+        font-family: 'Lato', sans-serif;
+        font-size: 100px;
+        font-weight: 200;
+        margin-bottom: 0;
+        color: #719e40;
       }
       .subtitle{
         color: #aaa;
@@ -33,7 +41,7 @@
         margin: 0;
       }
       .contact-form{
-        margin: 100px auto;
+        margin: 80px auto;
         width: 30%;
       }
       .contact-form input{
@@ -45,17 +53,55 @@
         padding: 20px 10px;
         margin-top: 20px;
       }
+      .contact-form p{
+        text-align: left;
+      }
+      .gender-area{
+        display: inline-block;
+      }
+      .gender-area p{
+        text-align: center;
+      }
+      .gender-input{
+        display: none;
+      }
+      .lname-input{
+        margin-bottom: 20px;
+      }
       .submit-btn{
         background: #719e40;
         color: white;
-        border: none;
         height: 50px;
         margin-top: 40px;
-        outline: none;
+      }
+      .user-info{
+        margin: 80px 0 50px;
       }
       .welcome-msg{
-        font-size: 30px;
-        margin-top: 100px;
+        font-size: 20px;
+        margin-top: 10px;
+      }
+      .skill-list{
+        margin: 20px auto;
+        width: 30%;
+      }
+      .skill-list label{
+        display: inline-block;
+        width: 30%;
+        text-align: right;
+        margin-right: 5%;
+      }
+      .skill-bar{
+        display: inline-block;
+        background: #e1e4e9;
+        width: 60%;
+        height: 20px;
+      }
+      .skill-bar span{
+        display: inline-block;
+        background: #ed5566;
+        float: left;
+        height: 100%;
       }
       .highlight{
         border-color: #f17676;
@@ -66,21 +112,122 @@
   <body>
     <h1>Slim</h1>
     <p class="subtitle">a microframework for PHP</p>
+
+    <!-- form -->
     <?php if($send == false): ?>
       <form action="/welcome" method="post" class="contact-form">
-        <input type="text" name="user[firstName]" value="" placeholder="First Name" class="fname-input">
+        <!-- gender -->
+        <div class="gender-area">
+          <button type="button" name="button" id="male-btn" class="selected">
+            <img src="img/boy_selected.png" alt="" width="100">
+          </button>
+          <p>Male</p>
+        </div>
+        <div class="gender-area">
+          <button type="button" name="button" id="female-btn">
+            <img src="img/girl.png" alt="" width="100">
+          </button>
+          <p>Female</p>
+        </div>
+        <input type="text" name="user[gender]" value="male" class="gender-input">
+        <!-- images by https://dribbble.com/CHIKO_DOG -->
+
+        <!-- username -->
+        <input type="text" name="user[firstName]" value="" placeholder="First Name" class="fname-input name-input">
         <br>
-        <input type="text" name="user[lastName]" value="" placeholder="Last Name" class="lname-input">
+        <input type="text" name="user[lastName]" value="" placeholder="Last Name" class="lname-input name-input">
+        <br>
+
+        <!-- skills -->
+        <p>HTML Skill</p>
+        <input type="text" id="html-slider" name="user[html]" value=""/>
+        <br>
+        <p>CSS Skill</p>
+        <input type="text" id="css-slider" name="user[css]" value=""/>
+        <br>
+        <p>JavaScript Skill</p>
+        <input type="text" id="js-slider" name="user[js]" value="">
         <br>
         <input type="submit" name="submitBtn" value="Submit" class="submit-btn">
       </form>
+
     <?php else: ?>
-      <p class="welcome-msg">
-        Welcome, <span><?php echo $obj["firstName"]; ?> <?php echo $obj["lastName"]; ?>!</span>
-      </p>
+
+      <!-- result -->
+      <div class="form-result">
+        <div class="user-info">
+          <?php if ($obj["gender"] == "male"): ?>
+            <img src="img/boy.png" alt="" width="100">
+          <?php else: ?>
+            <img src="img/girl.png" alt="" width="100">
+          <?php endif; ?>
+          <p class="welcome-msg">
+            <span><?php echo $obj["firstName"]; ?> <?php echo $obj["lastName"]; ?></span>
+          </p>
+        </div>
+
+        <div class="skill-list">
+          <label for="">HTML</label>
+          <div class="skill-bar">
+            <span style="width: <?php echo $obj["html"]*10; ?>%"></span>
+          </div>
+        </div>
+
+        <div class="skill-list">
+          <label for="">CSS</label>
+          <div class="skill-bar">
+            <span style="width: <?php echo $obj["css"]*10; ?>%"></span>
+          </div>
+        </div>
+
+        <div class="skill-list">
+          <label for="">JavaScript</label>
+          <div class="skill-bar">
+            <span style="width: <?php echo $obj["js"]*10; ?>%"></span>
+          </div>
+        </div>
+      </div>
+
     <?php endif; ?>
 
+    <!-- script -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="js/ion.rangeSlider.min.js" charset="utf-8"></script>
     <script type="text/javascript">
+      // select gender
+      $('#male-btn').click(function(){
+        $('#female-btn').removeClass('selected');
+        $('#female-btn img').attr('src', 'img/girl.png');
+        $('#male-btn').addClass('selected');
+        $('#male-btn img').attr('src', 'img/boy_selected.png');
+        $('.gender-input').val("male");
+      })
+
+      $('#female-btn').click(function(){
+        $('#male-btn').removeClass('selected');
+        $('#male-btn img').attr('src', 'img/boy.png');
+        $('#female-btn').addClass('selected');
+        $('#female-btn img').attr('src', 'img/girl_selected.png');
+        $('.gender-input').val("female");
+      })
+
+      //set up slider
+      $('#html-slider').ionRangeSlider({
+        min: 0,
+        max: 10
+      });
+
+      $('#css-slider').ionRangeSlider({
+        min: 0,
+        max: 10
+      });
+
+      $('#js-slider').ionRangeSlider({
+        min: 0,
+        max: 10
+      });
+
+      // submit form
       $('.submit-btn').click(function(e){
         if($('.fname-input').val() && $('.lname-input').val()){
           $('.fname-input').removeClass('highlight');
