@@ -85,7 +85,7 @@
         margin: 20px auto;
         width: 30%;
       }
-      .skill-list p{
+      .skill-list span{
         display: inline-block;
         width: 30%;
         text-align: right;
@@ -114,6 +114,7 @@
     <p class="subtitle">a microframework for PHP</p>
 
     <!-- form -->
+    <?php if($send == false): ?>
       <form action="/welcome" method="post" class="contact-form">
         <!-- gender -->
         <div class="gender-area">
@@ -150,38 +151,44 @@
         <input type="submit" name="submitBtn" value="Submit" class="submit-btn">
       </form>
 
+    <?php else: ?>
 
       <!-- result -->
       <div class="form-result">
         <div class="user-info">
+          <?php if ($obj["gender"] == "male"): ?>
             <img src="img/boy.png" alt="" width="100">
+          <?php else: ?>
             <img src="img/girl.png" alt="" width="100">
+          <?php endif; ?>
           <p class="welcome-msg">
-            <span></span>
+            <span><?php echo $obj["firstName"]; ?> <?php echo $obj["lastName"]; ?></span>
           </p>
         </div>
 
         <div class="skill-list">
           <span>HTML</span>
           <div class="skill-bar">
-            <span style=""></span>
+            <span style="width: <?php echo $obj["html"]*10; ?>%"></span>
           </div>
         </div>
 
         <div class="skill-list">
           <span>CSS</span>
           <div class="skill-bar">
-            <span style=""></span>
+            <span style="width: <?php echo $obj["css"]*10; ?>%"></span>
           </div>
         </div>
 
         <div class="skill-list">
           <span>JavaScript</span>
           <div class="skill-bar">
-            <span style=""></span>
+            <span style="width: <?php echo $obj["js"]*10; ?>%"></span>
           </div>
         </div>
       </div>
+
+    <?php endif; ?>
 
     <!-- script -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
